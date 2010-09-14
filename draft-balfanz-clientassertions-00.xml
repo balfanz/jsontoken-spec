@@ -14,10 +14,10 @@
 <?rfc comments="no"?>
 <?rfc inline="no"?>
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="info" docName="draft-balfanz-signedoauth-00" >
+<rfc category="info" docName="draft-balfanz-clientassertions-00" >
   <!-- ***** FRONT MATTER ***** -->
   <front>
-    <title abbrev="OAuth2 Signed Tokens">OAuth2 Signed Tokens</title>
+    <title abbrev="Client Assertion JSON Tokens">Client Assertion JSON Tokens</title>
     <author fullname="Dirk Balfanz" initials="D.B." role="editor" surname="Balfanz">
       <organization>Google Inc.</organization>
       <address>
@@ -41,84 +41,89 @@
     <keyword>signatures</keyword>
     <keyword>PKI</keyword>
     <abstract>
-      <t>This document describes how to cryptographically bind an
-      OAuth token and (parts of an) HTTP request to
-      a <xref target="JsonTokens">JSON tokens</xref>.</t>
+      <t>This document describes the JSON Token assertion type for
+      OAuth 2. Client Assertions JSON Tokens can be used whenever an
+      "assertion" access grant type is required.</t>
     </abstract>
   </front>
   <middle>
     <section title="Introduction">
-      <t>OAuth2 Signed Tokens are <xref target="JsonTokens">JSON
+      <t>Client Assertion JSON Tokens are <xref target="JsonTokens">JSON
       Tokens</xref> with additional payload parameters and a specific
-      envelope data type. We include an OAuth2 Signed Token in the
-      Authorization header of an HTTP request to ensure integrity of
-      the transmitted request.</t>
+      envelope data type. Client Assertions JSON Tokens can be used whenever an
+      "assertion" access grant type is required in the OAuth 2 protocol.</t>
       <section title="Requirements Language">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
          document are to be interpreted as described in <xref target="RFC2119">RFC 2119</xref>.</t>
       </section>
     </section>
-    <section title="OAuth2 Signed Token Parameters" anchor="params">
-      <t>OAuth2 Signed Tokens are <xref target="JsonTokens">JSON
+    <section title="Client Assertion JSON Token Parameters" anchor="params">
+      <t>Client Assertion JSON Tokens are <xref target="JsonTokens">JSON
         Tokens</xref> with the following additional payload parameters:
       <list style="hanging">
-        <t hangText="method">The HTTP method used to execute the
-          HTTP request. Type: string.</t>
         <t hangText="nonce">Used to prevent replay
           attacks. Receivers of OAuth2 Signed Token may verify that
           nonces have not been previously used within a reasonable
           interval. Type: string</t>
-        <t hangText="body_hash">(optional) The
-          base64url-encoded hash of the request body. Which
-          hash algorithm is used depends on the signature algorithm
-          specified in the Magic Signature envelope. Type: string</t>
-        <t hangText="token">The OAuth token. Type: string</t>
+        <t hangText="subject">(optional) If specified, the Client
+          requests an access token not for itself, but for the
+          specified user. Type: string</t>
       </list>
       </t>
     </section>
     <section title="OAuth2 Signed Token Data Type">
       <t>OAuth2 Signed Tokens SHALL use the data type
-      "application/oauth-token+json" for the data type element in the
+      "application/oauth-assertion+json" for the data type element in the
       Magic Signature envelope.</t>
     </section>
-    <section title="Generating OAuth2 Signed Tokens" anchor="generation">
-      <t>OAuth Clients generate OAuth2 Signed Tokens. The Client must
-        use its client id as the issuer value in the token
-        payload. They must use the URL of the Protected Resource as
-        the audience value in the payload.</t>
+    <section title="Generating Client Assertion JSON Tokens" anchor="generation">
+      <t>OAuth Clients generate Client Assertion JSON Tokens. The
+        Client must use its client id as the issuer value in the token
+        payload. The audience field must be the
+        <xref target="JsonTokens">Server Descriptor </xref> of the
+        Authorization Server (AS) that receives this assertion.</t>
        <t>Senders should set the token_lifetime in the token payload
          to a short lifetime, e.g., 1 minute.</t>
-       <t>Clients include a OAuth2 signed token into the authorization
-         header as follows: 
-        <figure><artwork><![CDATA[
-Authorization: Token signed_token="<the OAuth2 signed token>"
-]]></artwork></figure></t>
+       <t>Clients use a Client Assertion JSON Token during
+       "assertion" grant types by specifying the following parameter
+       values:
+	 <list style="symbols">
+	   <t>assertion_type: http://oauth.net/json-assertion</t>
+	   <t>assertion: the Client Assertion JSON Token</t>
+	   <t>scope: (optional) as defined in the OAuth2 spec.</t>
+	 </list>
+       </t>
+       <t>The Authorization Server (AS) returns an access token to the
+         client. Normally, the access token will be for an (role)
+         account (on the AS's side) that corresponds to the Client. If
+         the Client has specified a subject, and the Client is
+         permitted to impersonate the account in question, then the
+         returned access token will be for the account in question. If
+         the Client specifies a subject, but is not allowed to
+         impersonate that account, the AS returns an error.
+       </t>
     </section>
 
-      <section title="Validating OAuth2 Signed Tokens">
-        <t>Receivers of OAuth2 Signed Tokens proceed as follows to
+      <section title="Validating Client Assertion JSON Tokens">
+        <t>Receivers of Client Assertion JSON Tokens proceed as follows to
           validate an incoming HTTP request: 
         <list style="numbers">
           <t>They validate the JSON Tokens as explained in
             the <xref target="JsonTokens">JSON Token spec</xref>.</t>
           <t>They verify the correct data type in the Magic Signature
             envelope.</t>
-          <t>They verify that the method in the token payload equals
-            the method used to access the HTTP resource</t>
           <t>They verify that the audience in the token payload
-            matches the URI used to access the HTTP resource.</t>
+            identifies the validating Authorization Server.</t>
           <t>They may verify that the token nonce has not been used
             within the lifetime of the token.</t>
-          <t>If the body_hash field is present, they should verify
-            that the received request body hashes to the specified
-            value.</t>
 	</list>
-	If all these steps succeed, then the token in the payload can
-	be used to determine access control decisions for the
-	protected resource.
+	  If all these steps succeed, then the issuer value in the
+	  token's payload can be assumed to correctly identify the
+	  origin of the assertion.
         </t>
       </section>
+
   </middle>
   <!--  *****BACK MATTER ***** -->
   <back>

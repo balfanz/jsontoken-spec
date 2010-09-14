@@ -495,15 +495,6 @@ RSASSA-PKCS1-V1_5-VERIFY.</t>
       </reference>
 
     </references>
-    <section title="Specification Feedback">
-      <t>The primary driver of this specification is the Salmon protocol.
-      Feedback on this specification is thus welcomed via the salmon-discuss mailing
-      list, salmon-protocol@googlegroups.com.  For more information, see 
-      <eref target="http://groups.google.com/group/salmon-protocol">the Salmon discussion
-      group</eref>.  Bugs and errata may also be reported via
-      <eref target="http://code.google.com/p/salmon-protocol/issues/list">the Salmon bug tracker
-      </eref>.</t>
-    </section>
     <!-- Change Log
 
   -->
