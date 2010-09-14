@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en"><head><title>Draft: OAuth2 Signed Tokens</title>
-<meta http-equiv="Expires" content="Tue, 14 Sep 2010 05:02:50 +0000">
+<html lang="en"><head><title>Draft: Client Assertion JSON Tokens</title>
+<meta http-equiv="Expires" content="Tue, 14 Sep 2010 05:10:36 +0000">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="description" content="OAuth2 Signed Tokens">
+<meta name="description" content="Client Assertion JSON Tokens">
 <meta name="keywords" content="signatures, PKI">
 <meta name="generator" content="xml2rfc v1.34 (http://xml.resource.org/)">
 <style type='text/css'><!--
@@ -147,13 +147,13 @@
 <tr><td class="header">&nbsp;</td><td class="header">Google Inc.</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">September 13, 2010</td></tr>
 </table></td></tr></table>
-<h1><br />OAuth2 Signed Tokens</h1>
+<h1><br />Client Assertion JSON Tokens</h1>
 
 <h3>Abstract</h3>
 
-<p>This document describes how to cryptographically bind an
-      OAuth token and (parts of an) HTTP request to
-      a <a class='info' href='#JsonTokens'>JSON tokens<span> (</span><span class='info'>Balfanz, D., &ldquo;JSON Tokens,&rdquo; .</span><span>)</span></a> [JsonTokens].
+<p>This document describes the JSON Token assertion type for
+      OAuth 2. Client Assertions JSON Tokens can be used whenever an
+      "assertion" access grant type is required.
 </p><a name="toc"></a><br /><hr />
 <h3>Table of Contents</h3>
 <p class="toc">
@@ -162,13 +162,13 @@ Introduction<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor2">1.1.</a>&nbsp;
 Requirements Language<br />
 <a href="#params">2.</a>&nbsp;
-OAuth2 Signed Token Parameters<br />
+Client Assertion JSON Token Parameters<br />
 <a href="#anchor3">3.</a>&nbsp;
 OAuth2 Signed Token Data Type<br />
 <a href="#generation">4.</a>&nbsp;
-Generating OAuth2 Signed Tokens<br />
+Generating Client Assertion JSON Tokens<br />
 <a href="#anchor4">5.</a>&nbsp;
-Validating OAuth2 Signed Tokens<br />
+Validating Client Assertion JSON Tokens<br />
 <a href="#rfc.references1">6.</a>&nbsp;
 Normative References<br />
 <a href="#rfc.authors">&#167;</a>&nbsp;
@@ -181,11 +181,10 @@ Author's Address<br />
 <a name="rfc.section.1"></a><h3>1.&nbsp;
 Introduction</h3>
 
-<p>OAuth2 Signed Tokens are <a class='info' href='#JsonTokens'>JSON
+<p>Client Assertion JSON Tokens are <a class='info' href='#JsonTokens'>JSON
       Tokens<span> (</span><span class='info'>Balfanz, D., &ldquo;JSON Tokens,&rdquo; .</span><span>)</span></a> [JsonTokens] with additional payload parameters and a specific
-      envelope data type. We include an OAuth2 Signed Token in the
-      Authorization header of an HTTP request to ensure integrity of
-      the transmitted request.
+      envelope data type. Client Assertions JSON Tokens can be used whenever an
+      "assertion" access grant type is required in the OAuth 2 protocol.
 </p>
 <a name="anchor2"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
@@ -199,30 +198,22 @@ Requirements Language</h3>
 <a name="params"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.2"></a><h3>2.&nbsp;
-OAuth2 Signed Token Parameters</h3>
+Client Assertion JSON Token Parameters</h3>
 
-<p>OAuth2 Signed Tokens are <a class='info' href='#JsonTokens'>JSON
+<p>Client Assertion JSON Tokens are <a class='info' href='#JsonTokens'>JSON
         Tokens<span> (</span><span class='info'>Balfanz, D., &ldquo;JSON Tokens,&rdquo; .</span><span>)</span></a> [JsonTokens] with the following additional payload parameters:
       </p>
 <blockquote class="text"><dl>
-<dt>method</dt>
-<dd>The HTTP method used to execute the
-          HTTP request. Type: string.
-</dd>
 <dt>nonce</dt>
 <dd>Used to prevent replay
           attacks. Receivers of OAuth2 Signed Token may verify that
           nonces have not been previously used within a reasonable
           interval. Type: string
 </dd>
-<dt>body_hash</dt>
-<dd>(optional) The
-          base64url-encoded hash of the request body. Which
-          hash algorithm is used depends on the signature algorithm
-          specified in the Magic Signature envelope. Type: string
-</dd>
-<dt>token</dt>
-<dd>The OAuth token. Type: string
+<dt>subject</dt>
+<dd>(optional) If specified, the Client
+          requests an access token not for itself, but for the
+          specified user. Type: string
 </dd>
 </dl></blockquote><p>
       
@@ -233,36 +224,53 @@ OAuth2 Signed Token Parameters</h3>
 OAuth2 Signed Token Data Type</h3>
 
 <p>OAuth2 Signed Tokens SHALL use the data type
-      "application/oauth-token+json" for the data type element in the
+      "application/oauth-assertion+json" for the data type element in the
       Magic Signature envelope.
 </p>
 <a name="generation"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4"></a><h3>4.&nbsp;
-Generating OAuth2 Signed Tokens</h3>
+Generating Client Assertion JSON Tokens</h3>
 
-<p>OAuth Clients generate OAuth2 Signed Tokens. The Client must
-        use its client id as the issuer value in the token
-        payload. They must use the URL of the Protected Resource as
-        the audience value in the payload.
+<p>OAuth Clients generate Client Assertion JSON Tokens. The
+        Client must use its client id as the issuer value in the token
+        payload. The audience field must be the
+        <a class='info' href='#JsonTokens'>Server Descriptor<span> (</span><span class='info'>Balfanz, D., &ldquo;JSON Tokens,&rdquo; .</span><span>)</span></a> [JsonTokens] of the
+        Authorization Server (AS) that receives this assertion.
 </p>
 <p>Senders should set the token_lifetime in the token payload
          to a short lifetime, e.g., 1 minute.
 </p>
-<p>Clients include a OAuth2 signed token into the authorization
-         header as follows: 
-        </p>
-<div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
-Authorization: Token signed_token="&lt;the OAuth2 signed token&gt;"
-</pre></div><p>
-
+<p>Clients use a Client Assertion JSON Token during
+       "assertion" grant types by specifying the following parameter
+       values:
+	 </p>
+<ul class="text">
+<li>assertion_type: http://oauth.net/json-assertion
+</li>
+<li>assertion: the Client Assertion JSON Token
+</li>
+<li>scope: (optional) as defined in the OAuth2 spec.
+</li>
+</ul><p>
+       
+</p>
+<p>The Authorization Server (AS) returns an access token to the
+         client. Normally, the access token will be for an (role)
+         account (on the AS's side) that corresponds to the Client. If
+         the Client has specified a subject, and the Client is
+         permitted to impersonate the account in question, then the
+         returned access token will be for the account in question. If
+         the Client specifies a subject, but is not allowed to
+         impersonate that account, the AS returns an error.
+       
 </p>
 <a name="anchor4"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5"></a><h3>5.&nbsp;
-Validating OAuth2 Signed Tokens</h3>
+Validating Client Assertion JSON Tokens</h3>
 
-<p>Receivers of OAuth2 Signed Tokens proceed as follows to
+<p>Receivers of Client Assertion JSON Tokens proceed as follows to
           validate an incoming HTTP request: 
         </p>
 <ol class="text">
@@ -272,23 +280,16 @@ Validating OAuth2 Signed Tokens</h3>
 <li>They verify the correct data type in the Magic Signature
             envelope.
 </li>
-<li>They verify that the method in the token payload equals
-            the method used to access the HTTP resource
-</li>
 <li>They verify that the audience in the token payload
-            matches the URI used to access the HTTP resource.
+            identifies the validating Authorization Server.
 </li>
 <li>They may verify that the token nonce has not been used
             within the lifetime of the token.
 </li>
-<li>If the body_hash field is present, they should verify
-            that the received request body hashes to the specified
-            value.
-</li>
 </ol><p>
-	If all these steps succeed, then the token in the payload can
-	be used to determine access control decisions for the
-	protected resource.
+	  If all these steps succeed, then the issuer value in the
+	  token's payload can be assumed to correctly identify the
+	  origin of the assertion.
         
 </p>
 <a name="rfc.references1"></a><br /><hr />
