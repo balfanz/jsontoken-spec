@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en"><head><title>Draft: JSON Tokens</title>
-<meta http-equiv="Expires" content="Tue, 14 Sep 2010 05:10:44 +0000">
+<meta http-equiv="Expires" content="Mon, 20 Sep 2010 03:44:53 +0000">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="description" content="JSON Tokens">
 <meta name="keywords" content="signatures, PKI">
-<meta name="generator" content="xml2rfc v1.34 (http://xml.resource.org/)">
+<meta name="generator" content="xml2rfc v1.33 (http://xml.resource.org/)">
 <style type='text/css'><!--
         body {
                 font-family: verdana, charcoal, helvetica, arial, sans-serif;
@@ -146,7 +146,7 @@
 <tr><td class="header">Draft</td><td class="header">D. Balfanz, Ed.</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">J. Panzer</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Google Inc.</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">September 13, 2010</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">September 19, 2010</td></tr>
 </table></td></tr></table>
 <h1><br />JSON Tokens</h1>
 
@@ -171,45 +171,50 @@ Requirements Language<br />
 Definitions<br />
 <a href="#anchor3">3.</a>&nbsp;
 JSON Tokens<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#params">3.1.</a>&nbsp;
-Magic Envelope Parameters<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor4">3.2.</a>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor4">3.1.</a>&nbsp;
 Payload Parameters<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sbs">3.3.</a>&nbsp;
-The Signature Base String<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#compact">3.4.</a>&nbsp;
-JSON Token Serialization<br />
-<a href="#encoding">4.</a>&nbsp;
-Encoding of data and sig using base64url<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#encoding_details">4.1.</a>&nbsp;
-Encoding<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor5">4.2.</a>&nbsp;
-Decoding<br />
-<a href="#anchor6">5.</a>&nbsp;
-The HMAC-SHA256 Private Key Signature Algorithm<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor7">5.1.</a>&nbsp;
-Calculating the HMAC-SHA256 signature string<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hmac-verify">5.2.</a>&nbsp;
-Signing and Verifying JSON Tokens with HMAC-SHA256<br />
-<a href="#anchor8">6.</a>&nbsp;
-The RSA-SHA256 Public Key Signature Algorithm<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#signing">6.1.</a>&nbsp;
-Signing JSON Tokens with RSA-SHA256<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#verifying">6.2.</a>&nbsp;
-Verifying JSON Tokens with RSA-SHA256<br />
-<a href="#anchor9">7.</a>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor5">3.2.</a>&nbsp;
 Validating JSON Tokens<br />
-<a href="#mpki">8.</a>&nbsp;
-Obtaining Verification Keys<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor10">8.1.</a>&nbsp;
+<a href="#anchor6">4.</a>&nbsp;
+Excerpts from the Magic Signatures
+              Specification<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor7">4.1.</a>&nbsp;
+Magic Envelope Definition<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#params">4.1.1.</a>&nbsp;
+Magic Envelope Parameters<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sbs">4.1.2.</a>&nbsp;
+The Signature Base String<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#compact">4.1.3.</a>&nbsp;
+The Magic Envelope Compact Serialization<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#encoding">4.2.</a>&nbsp;
+Encoding of data and sig using base64url<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#encoding_details">4.2.1.</a>&nbsp;
+Encoding<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor8">4.2.2.</a>&nbsp;
+Decoding<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor9">4.3.</a>&nbsp;
+The HMAC-SHA256 Private Key Signature Algorithm<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor10">4.3.1.</a>&nbsp;
+Calculating the HMAC-SHA256 signature string<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hmac-verify">4.3.2.</a>&nbsp;
+Signing and Verifying Messages with HMAC-SHA256<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor11">4.4.</a>&nbsp;
+The RSA-SHA256 Public Key Signature Algorithm<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#signing">4.4.1.</a>&nbsp;
+Signing Messages with RSA-SHA256<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#verifying">4.4.2.</a>&nbsp;
+Verifying Messages with RSA-SHA256<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mpki">4.4.3.</a>&nbsp;
+Magic Public Key Infrastructure<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor12">4.4.3.1.</a>&nbsp;
 The application/magic-key MIME type<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#discovery">8.2.</a>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor13">4.4.3.2.</a>&nbsp;
 Discovery<br />
-<a href="#rfc.references1">9.</a>&nbsp;
+<a href="#rfc.references1">5.</a>&nbsp;
 References<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#rfc.references1">9.1.</a>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#rfc.references1">5.1.</a>&nbsp;
 Normative References<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#rfc.references2">9.2.</a>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#rfc.references2">5.2.</a>&nbsp;
 Informative References<br />
 <a href="#rfc.authors">&#167;</a>&nbsp;
 Authors' Addresses<br />
@@ -223,15 +228,12 @@ Introduction</h3>
 
 <p>JSON Tokens are digitally-signed JSON strings with a
          prescribed set of parameters in their payload. We
-         use <a class='info' href='#MagicSignatures'>Magic Signatures Compact
-         Serialization<span> (</span><span class='info'>Panzer, J., &ldquo;Magic Signatures,&rdquo; .</span><span>)</span></a> [MagicSignatures] to encode and sign the JSON payload.
+         use <a class='info' href='#compact'>Magic Signatures Compact
+         Serialization<span> (</span><span class='info'>The Magic Envelope Compact Serialization</span><span>)</span></a> to encode and sign the JSON payload.
 </p>
-<p>JSON Tokens are created by issuers, and consumed by
-         verifiers. While this documents describes a set of common
-         payload parameters for JSON Token, concrete applications of
-         JSON Tokens can further refine the set of payload parameters,
-         and need to define their own distinct data type parameter
-         to be included in the signature.
+<p>We include in this spec the relevant portions of
+      the <a class='info' href='#MagicSignatures'>Magic Signatures<span> (</span><span class='info'>Panzer, J., &ldquo;Magic Signatures,&rdquo; .</span><span>)</span></a> [MagicSignatures] spec
+      for reference.
       
 </p>
 <a name="anchor2"></a><br /><hr />
@@ -255,31 +257,9 @@ Definitions</h3>
 <dd>A digital signature that provably
              binds a message to a signer's secret key.
 </dd>
-<dt>Issuer:</dt>
-<dd>The entity that creates and signs the
-             JSON token.
-</dd>
-<dt>Verifier:</dt>
-<dd>The entity that consumes and verifies the
-             JSON token.
-</dd>
-<dt>Server Descriptor:</dt>
-<dd>A server descriptor is a
-             https or http URL. This URL resolves to a document that
-             describes the server (such as keys used to sign requests
-             or tokens, location of certain endpoints, etc.). Details
-             of the document are described below in <a class='info' href='#discovery'>Section&nbsp;8.2<span> (</span><span class='info'>Discovery</span><span>)</span></a>.
-             A verifier must be able to determine the server
-             descriptor of the issuer from the "issuer" field in the
-             token payload (see below). For example, verifiers could
-             specify that issuers put their service descriptor
-             directly in the "issuer" field. Alternatively, verifiers
-             could require issuers to pre-register with the verifier,
-             create a "client id" for the issuer, and maintain a
-             mapping from client ids to server descriptors of
-             issuers. In this latter case, issuers would include their
-             client id into the "issuer" field of the token
-             payload.
+<dt>Signer:</dt>
+<dd>In this specification, a http or https
+             URI used to determine a key used to sign an envelope.
 </dd>
 </dl></blockquote><p>
       
@@ -289,94 +269,27 @@ Definitions</h3>
 <a name="rfc.section.3"></a><h3>3.&nbsp;
 JSON Tokens</h3>
 
-<p>A JSON Token comprises a serialized JSON payload bundled
+<p>A JSON Token comprises a JSON payload bundled
          along with a signature for that payload, expressed as a
-         series of parameters. The serialized JSON payload, together
-         with the other parameters, is called
-         a <a class='info' href='#MagicSignatures'>"Magic Envelope"<span> (</span><span class='info'>Panzer, J., &ldquo;Magic Signatures,&rdquo; .</span><span>)</span></a> [MagicSignatures].
-         The envelope specifies the data to be signed, the MIME type
-         of the data, the transfer encoding, and the signature.
-</p>
-<a name="params"></a><br /><hr />
-<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
-Magic Envelope Parameters</h3>
-
-<p>
-        This section describes the semantics of the parameters use by
-        JSON Tokens.
-        </p>
-<blockquote class="text"><dl>
-<dt>data:</dt>
-<dd>The payload covered by the signature,
-            encoded into an ASCII string. This is a base64-encoding of
-            the payload JSON (see <a class='info' href='#encoding_details'>Section&nbsp;4.1<span> (</span><span class='info'>Encoding</span><span>)</span></a>).
-            Appears exactly once.
-</dd>
-<dt>data_type:</dt>
-<dd>The <a class='info' href='#RFC2045'>MIME<span> (</span><span class='info'>Freed, N. and N. Borenstein, &ldquo;Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies,&rdquo; November&nbsp;1996.</span><span>)</span></a> [RFC2045]
-            type of the payload prior to encoding.  Appears exactly
-            once. Different JSON token types use different data
-            types.
-</dd>
-<dt>encoding:</dt>
-<dd>The encoding used to convert between
-            the MIME type and the "data" string.  In this
-            specification, encoding MUST be the string "base64url",
-            indicating the url safe base64 encoding as described
-            in <a class='info' href='#RFC4648'>RFC 4648<span> (</span><span class='info'>Josefsson, S., &ldquo;The Base16, Base32, and Base64 Data Encodings,&rdquo; October&nbsp;2006.</span><span>)</span></a> [RFC4648], with the
-            whitespace normalization rules specified in
-            <a class='info' href='#encoding_details'>Section&nbsp;4.1<span> (</span><span class='info'>Encoding</span><span>)</span></a>.  All implementations
-            MUST support this encoding.  Appears exactly once.
-</dd>
-<dt>alg:</dt>
-<dd>The algorithm used for the signature.
-            This specification describes only one public key signature
-            algorithm, "RSA-SHA256", and one private key signature
-            algorithm, "HMAC-SHA256". Appears exactly once.
-</dd>
-<dt>sig:</dt>
-<dd>A generated signature.  This is a string
-            in the base64url encoded format as described below.  It is
-            generated according to the rules for the "alg" in
-            use. Appears exactly once.
-</dd>
-<dt>key_id:</dt>
-<dd>Optional hint indicating which
-            specific key owned by the issuer should be used to verify
-            the signature.  This allows issuers to explicitly signal a
-            change of key to recipients.  Omitting this parameter is
-            equivalent to setting it to an empty string.  The format
-            of this parameter is unspecified except that all
-            characters must be from the base64url allowed character
-            set.  Thus, "", "1", "AH478=", "0x6EF37D", and "fred" are
-            all legal key_ids.  The exact format is up to the
-            issuer.  Note that any binary data can be converted into
-            an acceptable key_id by base64url encoding it.  One way to
-            generate a usable key_id is to base64url-encode the SHA256
-            hash of the public signing key's magicsig representation;
-            this allows a signer to provide usable ids without
-            maintaining a mapping table.
-</dd>
-</dl></blockquote><p>
-        
+         series of parameters. JSON Tokens use
+         <a class='info' href='#compact'>Magic Envelope Compact
+         Serialization<span> (</span><span class='info'>The Magic Envelope Compact Serialization</span><span>)</span></a> to transform the payload and parameters
+         into a string suitable for inclusion in web requests.
 </p>
 <a name="anchor4"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
+<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
 Payload Parameters</h3>
 
-<p>The "data" payload is a serialized JSON data
-        structure. This JSON data structure itself contains the
-        following parameters:
+<p>The payload of the Magic Envelope is a JSON object that
+        contains the following parameters:
         </p>
 <blockquote class="text"><dl>
 <dt>issuer</dt>
 <dd>A string that allows the verifier to
-            determine the server descriptor of the issuer. This could
-            be the service descriptor itself, or some form of client
-            id, which the verifier can map to a server descriptor (see
-            above). Type: string
+            determine the Signer URI. This could be the Signer URI tself, or
+            some form of client id, which the verifier can map to a
+            Signer URI. Type: string
 </dd>
 <dt>not_before</dt>
 <dd>When does this token become valid
@@ -394,15 +307,133 @@ Payload Parameters</h3>
 </dl></blockquote><p>
         
 </p>
+<a name="anchor5"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
+Validating JSON Tokens</h3>
+
+<p>When receiving a JSON Token, a client can validate the token,
+          provided it has access to a signature verification key
+          (discussed in further detail below). It needs to perform the
+          following steps:
+	  </p>
+<ol class="text">
+<li>verify the data_type envelope parameter in an
+              application-dependent manner.
+</li>
+<li>extract the key identifier from the token, obtain
+              verification key for the Signer and key identifier (more
+              details <a class='info' href='#mpki'>below<span> (</span><span class='info'>Magic Public Key Infrastructure</span><span>)</span></a>).
+</li>
+<li>using verification key, verify signature on payload as
+              explained in <a class='info' href='#hmac-verify'>Section&nbsp;4.3.2<span> (</span><span class='info'>Signing and Verifying Messages with HMAC-SHA256</span><span>)</span></a> and
+              <a class='info' href='#verifying'>Section&nbsp;4.4.2<span> (</span><span class='info'>Verifying Messages with RSA-SHA256</span><span>)</span></a>.
+</li>
+<li>verify that the current time is not before the not_before
+              timestamp in the payload, and that the current time is
+              not after the expiration time of the token (defined as
+              not_before + token_lifetime). The verifier SHOULD be
+              lenient and anticipate some clock skew on the issuer's
+              side.
+</li>
+<li>verify the audience payload field in an
+              application-dependent manner.
+</li>
+</ol><p>
+	
+</p>
+<a name="anchor6"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4"></a><h3>4.&nbsp;
+Excerpts from the Magic Signatures
+              Specification</h3>
+
+<p>Below we reproduce the relevant sections of the
+        <a class='info' href='#MagicSignatures'>Magic Signatures<span> (</span><span class='info'>Panzer, J., &ldquo;Magic Signatures,&rdquo; .</span><span>)</span></a> [MagicSignatures]
+        specification for easy reference.
+</p>
+<a name="anchor7"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.1"></a><h3>4.1.&nbsp;
+Magic Envelope Definition</h3>
+
+<p>A "Magic Envelope" comprises a message bundled along with [a]
+           signature for that message, expressed as a series of
+           parameters [...].  The
+           envelope specifies the data to be signed, the MIME type of
+           the data, the transfer encoding, and the signature.
+</p>
+<a name="params"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.1.1"></a><h3>4.1.1.&nbsp;
+Magic Envelope Parameters</h3>
+
+<p>This section describes the semantics of the [envelope]
+         parameters [...].
+        </p>
+<blockquote class="text"><dl>
+<dt>data:</dt>
+<dd>The payload covered by the signature,
+            encoded into an ASCII string.  [...]
+</dd>
+<dt>data_type:</dt>
+<dd>The <a class='info' href='#RFC2045'>MIME<span> (</span><span class='info'>Freed, N. and N. Borenstein, &ldquo;Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies,&rdquo; November&nbsp;1996.</span><span>)</span></a> [RFC2045]
+	    type of the payload prior to encoding.  [...]
+</dd>
+<dt>encoding:</dt>
+<dd>The encoding used to convert between
+            the MIME type and the "data" string.  In this
+            specification, encoding MUST be the string "base64url",
+            indicating the url safe base64 encoding as described
+            in <a class='info' href='#RFC4648'>RFC 4648<span> (</span><span class='info'>Josefsson, S., &ldquo;The Base16, Base32, and Base64 Data Encodings,&rdquo; October&nbsp;2006.</span><span>)</span></a> [RFC4648], with the
+            whitespace normalization rules specified in
+            <a class='info' href='#encoding_details'>Section&nbsp;4.2.1<span> (</span><span class='info'>Encoding</span><span>)</span></a>. [...]
+</dd>
+<dt>alg:</dt>
+<dd>The algorithm used for the signature.
+            This specification describes only one public key signature
+            algorithm, "RSA-SHA256", and one private key signature
+            algorithm, "HMAC-SHA256".  Specifications relying on Magic
+            Signatures MUST specify which of these MUST be supported
+            for a particular protocol.  Implementations of general
+            Magic Signatures SHOULD support both for maximum
+            interoperability. [...]
+</dd>
+<dt>sig:</dt>
+<dd>A generated signature.  This is a string
+            in the base64url encoded format as described above.  It is
+            generated according to the rules for the "alg" in
+            use. [...]
+</dd>
+<dt>key_id:</dt>
+<dd>Optional hint indicating which
+            specific key owned by the signer should be used to verify
+            the signature.  This allows signers to explicitly signal a
+            change of key to recipients.  Omitting this parameter is
+            equivalent to setting it to an empty string.  The format
+            of this parameter is unspecified except that all
+            characters must be from the base64url allowed character
+            set.  Thus, "", "1", "AH478=", "0x6EF37D", and "fred" are
+            all legal key_ids.  The exact format is up to the key
+            issuer.  Note that any binary data can be converted into
+            an acceptable key_id by base64url encoding it.  One way to
+            generate a usable key_id is to base64url-encode the SHA256
+            hash of the public signing key's magicsig representation;
+            this allows a signer to provide usable ids without
+            maintaining a mapping table.
+</dd>
+</dl></blockquote><p>
+        
+</p>
 <a name="sbs"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.3.3"></a><h3>3.3.&nbsp;
+<a name="rfc.section.4.1.2"></a><h3>4.1.2.&nbsp;
 The Signature Base String</h3>
 
 <p>The Signature Base String used for both RSA-SHA256 and
           HMAC-SHA256 is described here.  It is used as input to the
           signature algorithms, as well as to create
-          the <a class='info' href='#compact'>JSON Token Serialization<span> (</span><span class='info'>JSON Token Serialization</span><span>)</span></a>,
+          the <a class='info' href='#compact'>Compact Serialization<span> (</span><span class='info'>The Magic Envelope Compact Serialization</span><span>)</span></a>,
           below.
 </p>
 <p>Given a Magic Envelope with "data", "data_type",
@@ -414,7 +445,7 @@ The Signature Base String</h3>
 <p>
         </p>
 <ol class="text">
-<li>The armored string for "data" produced by <a class='info' href='#encoding_details'>Section&nbsp;4.1<span> (</span><span class='info'>Encoding</span><span>)</span></a>
+<li>The armored string for "data" produced by <a class='info' href='#encoding_details'>Section&nbsp;4.2.1<span> (</span><span class='info'>Encoding</span><span>)</span></a>
 </li>
 <li>The Base64url encoding of the "data_type" parameter
 </li>
@@ -428,14 +459,19 @@ The Signature Base String</h3>
 </p>
 <a name="compact"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.3.4"></a><h3>3.4.&nbsp;
-JSON Token Serialization</h3>
+<a name="rfc.section.4.1.3"></a><h3>4.1.3.&nbsp;
+The Magic Envelope Compact Serialization</h3>
 
-<p>JSON Token serialization
-          uses <a class='info' href='#MagicSignatures'>Magic Envelope Compact
-          Serialization<span> (</span><span class='info'>Panzer, J., &ldquo;Magic Signatures,&rdquo; .</span><span>)</span></a> [MagicSignatures], which is produced by concatenating the
-          following substrings together, separated by periods (ASCII
-          0x2E):
+<p>The Magic Envelope Compact Serialization stores the
+          envelope itself in a compact, armored form suitable for
+          storage as a simple string.  It is guaranteed to contain no
+          spaces and no URL unsafe characters, and allows for only a
+          single signature.
+</p>
+<p>Given a singly signed envelope with one "sig" and one
+          "key_id", the Compact Serialization is produced by
+          concatenating the following substrings together, separated
+          by periods (ASCII 0x2E):
 </p>
 <p>
         </p>
@@ -450,79 +486,84 @@ JSON Token Serialization</h3>
 </ol><p>
         
 </p>
-<p>For example, if the key_id is
-          "4k8ikoyC2Xh+8BiIeQ+ob7Hcd2J7/Vj3uM61dy9iRMI=", the "sig" is
-          "EvGSD2vi8qYcveHnb-rrlok07qnCXjn8YSeCDDXlbhILSabgvNsPpbe76up8w63i2fWHvLKJzeGLKfyHg8ZomQ",
-          and the armored data is "Tm90IHJlYWxseSBBdG9t" with MIME
-          type application/atom+xml, then the JSON Token serialization
-          would be the string:
-          "4k8ikoyC2Xh+8BiIeQ+ob7Hcd2J7/Vj3uM61dy9iRMI=.EvGSD2vi8qYcveHnb-rrlok07qn
-          CXjn8YSeCDDXlbhILSabgvNsPpbe76up8w63i2fWHvLKJzeGLKfyHg8ZomQ.Tm90IHJlYWxse
-          SBBdG9t.YXBwbGljYXRpb24vYXRvbSt4bWw=.YmFzZTY0dXJs.UlNBLVNIQTI1Ng=="
+<p>
+        For example, if the key_id is "4k8ikoyC2Xh+8BiIeQ+ob7Hcd2J7/Vj3uM61dy9iRMI=",
+        the "sig" is "EvGSD2vi8qYcveHnb-rrlok07qnCXjn8YSeCDDXlbhILSabgvNsPpbe76up8w63i2fWHvLKJzeGLKfyHg8ZomQ",
+        and the armored data is "Tm90IHJlYWxseSBBdG9t" with MIME type
+        application/atom+xml, then the Compact Serialization would be the string:
+        "4k8ikoyC2Xh+8BiIeQ+ob7Hcd2J7/Vj3uM61dy9iRMI=.EvGSD2vi8qYcveHnb-rrlok07qn
+        CXjn8YSeCDDXlbhILSabgvNsPpbe76up8w63i2fWHvLKJzeGLKfyHg8ZomQ.Tm90IHJlYWxse
+        SBBdG9t.YXBwbGljYXRpb24vYXRvbSt4bWw=.YmFzZTY0dXJs.UlNBLVNIQTI1Ng=="
         
 </p>
-<p>Any parameter MAY be omitted by leaving its slot empty, as
-          indicated by two consecutive periods.  When the "encoding"
-          parameter is omitted, a recipient MUST decode the envelope
-          as if it had the value "base64url".  When the "alg"
-          parameter is omitted, a recipient MUST interpret the message
-          as if the "alg" parameter had the value "RSA-SHA256".  The
-          "data_type" parameter SHOULD NOT be omitted as it provides a
-          defense against content type masquerading attacks.
+<p>Any parameter MAY be omitted by leaving its slot empty, as indicated by two
+        consecutive periods.  When the "encoding" parameter is omitted, a recipient MUST
+        decode the envelope as if it had the value "base64url".  When the "alg" parameter
+        is omitted, a recipient MUST interpret the message as if the "alg" parameter 
+        had the value "RSA-SHA256".  The "data_type" parameter SHOULD NOT be omitted as it
+        provides a defense against content type masquerading attacks.
 </p>
 <a name="encoding"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.4"></a><h3>4.&nbsp;
+<a name="rfc.section.4.2"></a><h3>4.2.&nbsp;
 Encoding of data and sig using base64url</h3>
 
 <p>The data and sig fields of a Magic Envelope are encoded as
-        armored ASCII strings as described below:
+          armored ASCII strings using a procedure chosen to be robust
+          in the face of various types of transports and storage
+          systems.  Specifically, the encoded form is safe to include
+          directly as text in XML, a string in JSON, a parameter in
+          URLs, or as form data, without escaping.  This section
+          defines the mapping between arbitrary binary data (a stream
+          of octets) and the armored form (an ASCII string).  The
+          ASCII string is also chosen so as to be a valid and
+          equivalent UTF-8 string.
 </p>
 <a name="encoding_details"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.4.1"></a><h3>4.1.&nbsp;
+<a name="rfc.section.4.2.1"></a><h3>4.2.1.&nbsp;
 Encoding</h3>
 
-<p>
-          The basic procedure is to use the URL and Filename safe
-          variant of the base64 encoding as described in
-          <a class='info' href='#RFC4648'>RFC 4648<span> (</span><span class='info'>Josefsson, S., &ldquo;The Base16, Base32, and Base64 Data Encodings,&rdquo; October&nbsp;2006.</span><span>)</span></a> [RFC4648], section 5, hereafter
-          known as "base64url" encoding. The result is a string that
-          consists only of the ASCII alphanumeric characters along
-          with '-' and '_', and possibly '='.  In regular expression
-          form, this is "^[A-Za-z0-9\-_]*=?=?=?$".  This is the
-          normalized form of the encoded data, and is the basis for
-          the octet sequence that is used to generate the digital
-          signature.  Implementations and transports MAY add arbitrary
-          whitespace (ASCII values 0x09-0x0D and 0x20) anywhere in
-          this string after signing but before output so as to, e.g.,
-          comply with line length restrictions in certain
-          environments.
-        
+<p>The basic procedure is to use the URL and Filename safe
+            variant of the base64 encoding as described in
+            <a class='info' href='#RFC4648'>RFC 4648<span> (</span><span class='info'>Josefsson, S., &ldquo;The Base16, Base32, and Base64 Data Encodings,&rdquo; October&nbsp;2006.</span><span>)</span></a> [RFC4648], section 5,
+            hereafter known as "base64url" encoding.  The result is a
+            string that consists only of the ASCII alphanumeric
+            characters along with '-' and '_', and possibly '='.  In
+            regular expression form, this is
+            "^[A-Za-z0-9\-_]*=?=?=?$".  This is the normalized form of
+            the encoded data, and is the basis for the octet sequence
+            that is used to generate the digital signature.
+            Implementations and transports MAY add arbitrary
+            whitespace (ASCII values 0x09-0x0D and 0x20) anywhere in
+            this string after signing but before output so as to,
+            e.g., comply with line length restrictions in certain
+            environments.
 </p>
-<a name="anchor5"></a><br /><hr />
+<a name="anchor8"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.4.2"></a><h3>4.2.&nbsp;
+<a name="rfc.section.4.2.2"></a><h3>4.2.2.&nbsp;
 Decoding</h3>
 
-<p>
-          The basic procedure is the reverse of encoding, with the
+<p>The basic procedure is the reverse of encoding, with the
           additional step that whitespace from the input should be
           ignored.  This is necessary for robustness because some
           transports may insert whitespace, and is useful to allow for
           human readable formatting of documents in any case.
           </p>
 <ol class="text">
-<li>Normalize the string by removing all whitespace characters from input.
+<li>Normalize the string by removing all whitespace
+              characters from input.
 </li>
-<li>Base64url decode the resulting string to produce the original binary data.
+<li>Base64url decode the resulting string to produce the
+              original binary data.
 </li>
 </ol><p>
         
 </p>
-<a name="anchor6"></a><br /><hr />
+<a name="anchor9"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.5"></a><h3>5.&nbsp;
+<a name="rfc.section.4.3"></a><h3>4.3.&nbsp;
 The HMAC-SHA256 Private Key Signature Algorithm</h3>
 
 <p>This section defines a basic HMAC based private key signature
@@ -530,22 +571,22 @@ The HMAC-SHA256 Private Key Signature Algorithm</h3>
         scope of this specification, but may be defined in
         specifications relying on this one.
 </p>
-<a name="anchor7"></a><br /><hr />
+<a name="anchor10"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.5.1"></a><h3>5.1.&nbsp;
+<a name="rfc.section.4.3.1"></a><h3>4.3.1.&nbsp;
 Calculating the HMAC-SHA256 signature string</h3>
 
-<p>First, create an HMAC-SHA256 signature using the algorithm
-          described in <a class='info' href='#RFC2104'>RFC 2104<span> (</span><span class='info'>Krawczyk, H., Bellare, M., and R. Canetti, &ldquo;HMAC: Keyed-Hashing for Message Authentication,&rdquo; February&nbsp;1997.</span><span>)</span></a> [RFC2104], using
-          SHA-256 as the hash function H, base string described in
-          <a class='info' href='#sbs'>Section&nbsp;3.3<span> (</span><span class='info'>The Signature Base String</span><span>)</span></a> as the input text, and the shared
+<p>First, create an HMAC-SHA256 signature using the algorithm described in 
+          <a class='info' href='#RFC2104'>RFC 2104<span> (</span><span class='info'>Krawczyk, H., Bellare, M., and R. Canetti, &ldquo;HMAC: Keyed-Hashing for Message Authentication,&rdquo; February&nbsp;1997.</span><span>)</span></a> [RFC2104], using SHA-256 as the
+          hash function H, base string described in
+          <a class='info' href='#sbs'>Section&nbsp;4.1.2<span> (</span><span class='info'>The Signature Base String</span><span>)</span></a> as the input text, and the shared
           secret key K.  The resulting array of bytes is then
           base64url encoded to produce the "sig" parameter.
 </p>
 <a name="hmac-verify"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.5.2"></a><h3>5.2.&nbsp;
-Signing and Verifying JSON Tokens with HMAC-SHA256</h3>
+<a name="rfc.section.4.3.2"></a><h3>4.3.2.&nbsp;
+Signing and Verifying Messages with HMAC-SHA256</h3>
 
 <p>Signing consists of calculating the "sig" parameter and
           serializing it along with the other parameters to create a
@@ -554,167 +595,174 @@ Signing and Verifying JSON Tokens with HMAC-SHA256</h3>
           doing an exact string comparison of the "sig" parameters
           after normalization (whitespace removal).
 </p>
-<a name="anchor8"></a><br /><hr />
+<a name="anchor11"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.6"></a><h3>6.&nbsp;
+<a name="rfc.section.4.4"></a><h3>4.4.&nbsp;
 The RSA-SHA256 Public Key Signature Algorithm</h3>
 
 <p>This section defines the default public key signature
         algorithm for Magic Signatures.  In addition to indicating the
         signing algorithm, use of RSA-SHA256 by default also implies
         use of the Magic Public Key Infrastructure
-        <a class='info' href='#mpki'>Section&nbsp;8<span> (</span><span class='info'>Obtaining Verification Keys</span><span>)</span></a> to obtain public keys.  Specifications
+        <a class='info' href='#mpki'>Section&nbsp;4.4.3<span> (</span><span class='info'>Magic Public Key Infrastructure</span><span>)</span></a> to obtain public keys.  Specifications
         relying on Magic Signatures MAY specify other mechanisms for
         key retrieval.
 </p>
 <a name="signing"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.6.1"></a><h3>6.1.&nbsp;
-Signing JSON Tokens with RSA-SHA256</h3>
+<a name="rfc.section.4.4.1"></a><h3>4.4.1.&nbsp;
+Signing Messages with RSA-SHA256</h3>
 
-<p>Signing a JSON Token consists of signing the contents of
-          "data", "data_type", "encoding", and "alg" using the chosen
-          algorithm.  This section defines the "RSA-SHA256" algorithm,
-          meaning the RSASSA-PKCS1-v1_5 signature algorithm
-          from <a class='info' href='#RFC3447'>RFC 3447<span> (</span><span class='info'>Jonsson, J. and B. Kaliski, &ldquo;Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.1,&rdquo; February&nbsp;2003.</span><span>)</span></a> [RFC3447] section 8.2,
-          also known as PKCS#1, using SHA-256 as the hash function for
-          EMSA-PKCS1-v1_5.
+<p>Signing a message consists of signing the contents of "data",
+        "data_type", "encoding", and "alg" using the chosen algorithm.
+        This section defines the "RSA-SHA256" algorithm, meaning the
+        RSASSA-PKCS1-v1_5 signature algorithm from
+        <a class='info' href='#RFC3447'>RFC 3447<span> (</span><span class='info'>Jonsson, J. and B. Kaliski, &ldquo;Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.1,&rdquo; February&nbsp;2003.</span><span>)</span></a> [RFC3447] section 8.2, also known
+        as PKCS#1, using SHA-256 as the hash function for
+        EMSA-PKCS1-v1_5.
 </p>
-<p>Note: As best current crypto practices change, new
-          algorithms will become available and both extensions and
-          future revisions of this specification may include
-          additional new public key algorithms (e.g., RSASSA-PSS).
-          When both clients and servers have sufficiently widespread
-          support for the latest algorithm, older algorithms (e.g.,
-          RSASSA-PKCS1-v1_5) will be deprecated and removed in
-          subsequent revisions of this specification.
+<p>Note: As best current crypto practices change, new algorithms
+        will become available and both extensions and future revisions
+        of this specification may include additional new public key
+        algorithms (e.g., RSASSA-PSS).  When both clients and servers
+        have sufficiently widespread support for the latest algorithm,
+        older algorithms (e.g., RSASSA-PKCS1-v1_5) will be deprecated
+        and removed in subsequent revisions of this specification.
 </p>
 <p>The signature is computed as signature_octets =
-          RSASSA-PKCS1-V1_5-SIGN (K, M), where K is the private
-          signing key and M is the <a class='info' href='#sbs'>Signature Base
-          String<span> (</span><span class='info'>The Signature Base String</span><span>)</span></a> defined above.
+        RSASSA-PKCS1-V1_5-SIGN (K, M), where K is the private signing
+        key and M is the <a class='info' href='#sbs'>Signature Base
+        String<span> (</span><span class='info'>The Signature Base String</span><span>)</span></a> defined above.  Thus M is produced by
+        concatenating the following substrings together, separated by
+        periods (ASCII 0x2E):
+        </p>
+<ol class="text">
+<li>The armored string for "data" produced by <a class='info' href='#encoding_details'>Section&nbsp;4.2.1<span> (</span><span class='info'>Encoding</span><span>)</span></a>
+</li>
+<li>The Base64url encoding of the "data_type" parameter
+</li>
+<li>The Base64url encoding of the "encoding" parameter
+</li>
+<li>The Base64url encoding of the "alg" parameter
+</li>
+</ol><p>
+        For example, if the
+        armored data is "Tm90IHJlYWxseSBBdG9t" with MIME type
+        application/atom+xml, then M would be the string:
+        "Tm90IHJlYWxseSBBdG9t.YXBwbGljYXRpb24vYXRvbSt4bWw=.YmFzZTY0dXJs.UlNBLVNIQTI1Ng=="
+      
+</p>
+<p>For convenience we summarize the steps for the required
+        EMSA-PKCS1-v1_5 with RSA-SHA256 algorithm here.  In the
+        following, '+' means string concatenation.
+        </p>
+<ol class="text">
+<li>Let hash = the SHA256 hash digest of M
+</li>
+<li>Let prefix = the constant byte sequence
+          [0x30, 0x31, 0x30, 0xd, 0x6,
+          0x9, 0x60, 0x86, 0x48, 0x1, 0x65, 0x3, 0x4, 0x2, 0x1, 0x5,
+          0x0, 0x4, 0x20]
+</li>
+<li>Let k = the number of bytes in the public key modulus
+</li>
+<li>Let padding = '\xFF' repeated (k - length(prefix+hash) - 3)
+            times
+</li>
+<li>Let emsa =  '\x00' + '\x01' + padding + '\x00' + prefix + hash
+</li>
+<li>RSA sign the emsa byte sequence
+</li>
+</ol><p>
+    
 </p>
 <p>The signature is then encoded as in
-          <a class='info' href='#encoding_details'>Section&nbsp;4.1<span> (</span><span class='info'>Encoding</span><span>)</span></a> and the resulting ASCII
-          armored string stored as a "sig" signature.  The associated
-          "key_id" is the key_id associated with that signing key and
-          published per <a class='info' href='#mpki'>Section&nbsp;8<span> (</span><span class='info'>Obtaining Verification Keys</span><span>)</span></a>.  If the signer does not
-          maintain individual key_ids, it SHOULD output the base64url
-          encoded respresentation of the SHA-256 hash of public key's
-          application/magic-key representation.
+      <a class='info' href='#encoding_details'>Section&nbsp;4.2.1<span> (</span><span class='info'>Encoding</span><span>)</span></a> and the resulting ASCII
+      armored string stored as a "sig" signature.  The associated
+      "key_id" is the key_id associated with that signing key and
+      published per <a class='info' href='#mpki'>Section&nbsp;4.4.3<span> (</span><span class='info'>Magic Public Key Infrastructure</span><span>)</span></a>.  If the signer does not
+      maintain individual key_ids, it SHOULD output the base64url
+      encoded respresentation of the SHA-256 hash of public key's
+      application/magic-key representation.
 </p>
 <a name="verifying"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.6.2"></a><h3>6.2.&nbsp;
-Verifying JSON Tokens with RSA-SHA256</h3>
+<a name="rfc.section.4.4.2"></a><h3>4.4.2.&nbsp;
+Verifying Messages with RSA-SHA256</h3>
 
-<p>Verifying a JSON Token signature consists of verifying that
-          "sig" is a valid signature for "data" using "alg".  This
-          specification defines only the "RSA-SHA256" verification
-          algorithm, meaning the RSASSA-PKCS1-v1_5 verification
-          algorithm from <a class='info' href='#RFC3447'>RFC 3447<span> (</span><span class='info'>Jonsson, J. and B. Kaliski, &ldquo;Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.1,&rdquo; February&nbsp;2003.</span><span>)</span></a> [RFC3447]
-          section 8.2.1.
+<p>Verifying a message signature consists of verifying that
+        "sig" is a valid signature for "data" using "alg".  This
+        specification defines only the "RSA-SHA256" verification
+        algorithm, meaning the RSASSA-PKCS1-v1_5 verification
+        algorithm from <a class='info' href='#RFC3447'>RFC 3447<span> (</span><span class='info'>Jonsson, J. and B. Kaliski, &ldquo;Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.1,&rdquo; February&nbsp;2003.</span><span>)</span></a> [RFC3447] section
+        8.2.1.
 </p>
-<p>The verification is performed by executing
-          RSASSA-PKCS1-V1_5-VERIFY ((n, e), M, S), where (n ,e)
-          comprise the public key, M is the Signature Base String
-          documented in <a class='info' href='#sbs'>Section&nbsp;3.3<span> (</span><span class='info'>The Signature Base String</span><span>)</span></a>, and S is the decoded
-          value of a selected "sig".  (Note that this algorithm
-          creates the emsa byte sequence as in
-          <a class='info' href='#signing'>Section&nbsp;6.1<span> (</span><span class='info'>Signing JSON Tokens with RSA-SHA256</span><span>)</span></a> and then performs RSA verification
-          using (n, e), emsa, and S.)
+<p>The verification is performed by executing RSASSA-PKCS1-V1_5-VERIFY
+        ((n, e), M, S), where (n ,e)
+        comprise the public key, M is the message string
+        documented in <a class='info' href='#signing'>Section&nbsp;4.4.1<span> (</span><span class='info'>Signing Messages with RSA-SHA256</span><span>)</span></a>,
+        and S is the decoded value of a selected "sig".  (Note that this
+        algorithm creates the emsa byte sequence as in <a class='info' href='#signing'>Section&nbsp;4.4.1<span> (</span><span class='info'>Signing Messages with RSA-SHA256</span><span>)</span></a>
+        and then performs RSA verification using (n, e), emsa, and S.)[...]
 </p>
-<a name="anchor9"></a><br /><hr />
-<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.7"></a><h3>7.&nbsp;
-Validating JSON Tokens</h3>
-
-<p>When receiving a JSON Token, a client can validate the token,
-        provided it has access to a signature verification key
-        (discussed in further detail below). It needs to perform the
-        following steps:
-	</p>
-<ol class="text">
-<li>extract the key identifier from the token, obtain
-             verification key for the issuer and key identifier (more
-             details <a class='info' href='#mpki'>below<span> (</span><span class='info'>Obtaining Verification Keys</span><span>)</span></a>).
-</li>
-<li>using verification key, verify signature on payload as
-             explained in <a class='info' href='#hmac-verify'>Section&nbsp;5.2<span> (</span><span class='info'>Signing and Verifying JSON Tokens with HMAC-SHA256</span><span>)</span></a> and
-             <a class='info' href='#verifying'>Section&nbsp;6.2<span> (</span><span class='info'>Verifying JSON Tokens with RSA-SHA256</span><span>)</span></a>.
-</li>
-<li>verify that the current time is not before the not_before
-             timestamp in the payload, and that the current time is
-             not after the expiration time of the token (defined as
-             not_before + token_lifetime). The verifier SHOULD be
-             lenient and anticipate some clock skew on the issuer's
-             side.
-</li>
-<li>verify the audience field in an application-dependent
-             manner.
-</li>
-</ol><p>
-       
+<p>[...] Signers SHOULD ensure that the content expiration is
+        not after the known key expiration time.  That is, the signed
+        content should expire no later than the expiration date of the
+        key used to sign it.
+</p>
+<p>Note that emergency key revocation is outside the scope of
+        this specification.  However, implementations SHOULD honor
+        HTTP cache control directives when retrieving key material and
+        SHOULD NOT use keys for verification without revalidating the
+        content as directed by the origin server.  This allows origin
+        servers to trade off performance for smaller periods of
+        vulnerability.
+</p>
+<p>Unless specified otherwise, the public key (n, e) is obtained
+        using the simple public key infrastructure described by
+        <a class='info' href='#mpki'>Section&nbsp;4.4.3<span> (</span><span class='info'>Magic Public Key Infrastructure</span><span>)</span></a>.  Note that several candidate signing
+        keys may be retrieved, and in the worst case verifiers MUST
+        try each one with equal key_id until at least one successfully
+        verifies the signature.  Two key IDs are equal if their
+        individual octets are equal and they are of equal length.  A
+        signature with an empty (missing) key_id, which may have been
+        signed by any key, MUST be verified against all available
+        keys.
 </p>
 <a name="mpki"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.8"></a><h3>8.&nbsp;
-Obtaining Verification Keys</h3>
+<a name="rfc.section.4.4.3"></a><h3>4.4.3.&nbsp;
+Magic Public Key Infrastructure</h3>
 
-<p>
-      </p>
-<blockquote class="text"><dl>
-<dt>Obtaining RSA Verification Keys:</dt>
-<dd>To obtain an RSA
-          verification key, the client accesses the Server Descriptor
-          of the issuer (perhaps after mapping the issuer string
-          obtained from the token payload to the Server Descriptor),
-          and parses the returned document. The returned document may
-          include one or more public keys, labeled with key
-          identifiers (details below in
-          the <a class='info' href='#discovery'>Discovery<span> (</span><span class='info'>Discovery</span><span>)</span></a> section). The
-          key that matches the key_id from the token's envelope shall
-          be used to verify the token. If there is no key_id in the
-          token's envelope, then token validation succeeds if any of
-          the obtained keys successfully verifies the signature.
-        
-</dd>
-<dt>Obtaining HMAC Verification Keys:</dt>
-<dd>To obtain an
-          HMAC verification key, the verifier has to exchange, in an
-          out-of-band fashion, shared keys with the issuer. Each key
-          must be labeled with an identifier, unless there is only one
-          shared key at any given point in time, in which case no
-          label is necessary, and the key_id parameter in the payload
-          will be ignored by the client.
-        
-</dd>
-</dl></blockquote><p>
-     The remainder of this section will deal with public (RSA) keys only.     
-     
+<p>This section defines a public key infrastructure based on
+        URIs.  [...] Specifically, given a Signer URI such as [...]
+        "http://example.com/bob", the corresponding public key(s) for
+        that identifier can be discovered as defined below.  The
+        result is a set of RSA public keys in a simple string
+        format.
 </p>
-<a name="anchor10"></a><br /><hr />
+<a name="anchor12"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.8.1"></a><h3>8.1.&nbsp;
+<a name="rfc.section.4.4.3.1"></a><h3>4.4.3.1.&nbsp;
 The application/magic-key MIME type</h3>
 
 <p>The application/magic-key format is a very minimal format
-         for representing public key data.  It consists of a string of
-         ASCII text, separated into 3 components, with components
-         separated by a "." (0x2E) character.  The first component is
-         the key type; this specification only defines the "RSA" key
-         type for future upgradeability.  Thus a magic key consists of
-         the string "RSA.modulus(n).exponent(e)"; for example:
-          </p>
+          for representing public key data.  It consists of a string
+          of ASCII text, separated into 3 components, with components
+          separated by a "." (0x2E) character.  The first component is
+          the key type; this specification only defines the "RSA" key
+          type for future upgradeability.  Thus a magic key consists
+          of the string "RSA.modulus(n).exponent(e)"; for example:
+</p>
 <div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 RSA.mVgY8RN6URBTstndvmUUPb4UZTdwvwmddSKE5z_jvKUEK6yk1u3rrC9yN8k6FilGj9K0eeUPe2hf4Pj-5CmHww.AQAB
 </pre></div><p>
- The pair (n, e) is used as input to
-RSASSA-PKCS1-V1_5-VERIFY.
+        
+        The pair (n, e) is used as input to RSASSA-PKCS1-V1_5-VERIFY.
 </p>
 <p>Each of the components is first represented as an integer
           in network byte order (big endian) and encoded via the
-          "base64url" mechanism described in <a class='info' href='#params'>Section&nbsp;3.1<span> (</span><span class='info'>Magic Envelope Parameters</span><span>)</span></a>.
+          "base64url" mechanism described in <a class='info' href='#params'>Section&nbsp;4.1.1<span> (</span><span class='info'>Magic Envelope Parameters</span><span>)</span></a>.
         
 </p>
 <p>This specificaion defines only a public key format, and
@@ -722,30 +770,37 @@ RSASSA-PKCS1-V1_5-VERIFY.
           formats (e.g., DER encoded X.509 certificates) and that the
           application/magic-key data will be generated via tools.
 </p>
-<a name="discovery"></a><br /><hr />
+<a name="anchor13"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.8.2"></a><h3>8.2.&nbsp;
+<a name="rfc.section.4.4.3.2"></a><h3>4.4.3.2.&nbsp;
 Discovery</h3>
 
-<p>Server Descriptors resolve directly to "server information"
-          documents that contain data about the servers. For now, we
-          only describe the "verification_keys" data type, but it's
-          easy to imagine how other information can be embedded in
-          these documents.
+<p>This section defines how to map from a signer URI
+          identifier to a set of public signing keys for that
+          identifier.  [...]
 </p>
-<p>Server information documents are a simple JSON dictionary.
-          The verification keys are stored within an array named
-          "magic_keys".  The array's values are objects, each of which
-          MUST have a string "value" element containing the
-          application/magic-key string, and which MAY have a string
-          "key_id" element containing the id of that key.
-          If the key_id is omitted from a key, it defaults to the
-          Base64url encoding of the SHA-256 hash of the "value"
-          parameter.  That is, when doing discovery, processors MUST
-          assume that an omitted key_id is equivalent to specifying
-          key_id = Base64url(SHA-256(value)).  A signer MAY then use
-          this value as a key_id on a signature in order to signal use
-          of that key.
+<p>The end result of discovery will be a collection of magic
+          keys.  Each magic key has a "data" parameter, a string in
+          application/magic-key format; and an optional "key_id"
+          parameter, a string as defined in [TBD:REF].  If the key_id
+          is omitted from a key, it defaults to the Base64url encoding
+          of the SHA-256 hash of the "value" parameter.  That is, when
+          doing discovery, processors MUST assume that an omitted
+          key_id is equivalent to specifying key_id =
+          Base64url(SHA-256(value)).  A signer MAY then use this value
+          as a key_id on a signature in order to signal use of that
+          key.[...]
+</p>
+<a name="anchor14"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.4.3.2.1"></a><h3>4.4.3.2.1.&nbsp;
+The JSON Serialization of Magic Keys</h3>
+
+<p>The keys are stored within an array named "magic_keys".
+            The array's values are objects, each of which MUST have a
+            string "value" element containing the
+            application/magic-key string, and which MAY have a string
+            "key_id" element containing the id of that key.
 </p>
 <p>Example:
           </p>
@@ -762,14 +817,46 @@ Discovery</h3>
 
           
 </p>
+<a name="anchor15"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.4.3.2.2"></a><h3>4.4.3.2.2.&nbsp;
+Discovery Flow</h3>
+
+<p>Given a [Signer] URI U, [...] directly retrieve the
+            resource U via SSL, performing necessary certificate
+            checks, and see if the resulting data is of type
+            application/metadata+json.  If so, look for the
+            "magic_public_keys" array as per the JSON Serialization.
+            [...]
+</p>
+<a name="anchor16"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.4.3.2.3"></a><h3>4.4.3.2.3.&nbsp;
+Key Selection</h3>
+
+<p>Once a set of possible key candidates have been
+              determined, via discovery or alternatively via an
+              extension mechanism outside the scope of this
+              specification, a verifier must then determine whether a
+              given signature is valid.  This section details how to
+              do so in an interoperable way.
+</p>
+<p>Among the available keys, select the key for
+              verification by matching the key_id against the key_id
+              specified in the signature.  In this context an empty
+              string key_id matches everything.  This produces a
+              smaller set of possible keys to use for verification.
+              Verification succeeds if any one of these keys
+              successfully verifies the signature.[...]
+</p>
 <a name="rfc.references"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<a name="rfc.section.9"></a><h3>9.&nbsp;
+<a name="rfc.section.5"></a><h3>5.&nbsp;
 References</h3>
 
 <a name="rfc.references1"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<h3>9.1.&nbsp;Normative References</h3>
+<h3>5.1.&nbsp;Normative References</h3>
 <table width="99%" border="0">
 <tr><td class="author-text" valign="top"><a name="RFC2045">[RFC2045]</a></td>
 <td class="author-text"><a href="mailto:ned@innosoft.com">Freed, N.</a> and <a href="mailto:nsb@nsb.fv.com">N. Borenstein</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2045">Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</a>,&rdquo; RFC&nbsp;2045, November&nbsp;1996 (<a href="http://www.rfc-editor.org/rfc/rfc2045.txt">TXT</a>).</td></tr>
@@ -785,7 +872,7 @@ References</h3>
 
 <a name="rfc.references2"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
-<h3>9.2.&nbsp;Informative References</h3>
+<h3>5.2.&nbsp;Informative References</h3>
 <table width="99%" border="0">
 <tr><td class="author-text" valign="top"><a name="MagicSignatures">[MagicSignatures]</a></td>
 <td class="author-text">Panzer, J., &ldquo;<a href="http://salmon-protocol.googlecode.com/svn/trunk/draft-panzer-magicsig-experimental-00.html">Magic Signatures</a>.&rdquo;</td></tr>
